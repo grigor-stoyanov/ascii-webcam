@@ -47,6 +47,7 @@ contrast, brightness, 3D depth (face shading from the face points) and character
 | `,` `.` | brightness                              |
 | `F`     | fullscreen                              |
 | `Space` | take a selfie (saves a PNG)             |
+| `I`     | show / hide FPS                         |
 
 ## Scripts
 

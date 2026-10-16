@@ -27,3 +27,19 @@ body {
     max-height: 100vh;
     max-height: 100dvh;
 }
+
+.fps {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+    padding: 4px 8px;
+    font: 14px ui-monospace, 'Cascadia Code', Consolas, Menlo, monospace;
+    color: #39ff14;
+    background: rgba(4, 12, 6, 0.88);
+    border-radius: 6px;
+}
+
+.fps[hidden] {
+    display: none;
+}

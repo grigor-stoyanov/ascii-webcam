@@ -8,6 +8,7 @@ import { drawAscii } from './rendering/ascii.js';
 import { drawFaceOverlay } from './rendering/faceOverlay.js';
 import { createPanel } from './ui/panel.js';
 import { setupKeyboard } from './ui/keyboard.js';
+import { countFrame } from './ui/fps.js';
 
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
@@ -40,6 +41,7 @@ function draw(time) {
     if (personMask) applyMask(frameCtx, personMask);
     drawAscii(ctx, frame, face, time);
     if (face && config.debug.showFaceOverlay) drawFaceOverlay(ctx, face);
+    countFrame(time);
 
     requestAnimationFrame(draw);
 }
