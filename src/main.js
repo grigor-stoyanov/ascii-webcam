@@ -3,38 +3,42 @@ import { hasMotion } from './detection/motion.js';
 import { detectFace } from './detection/face.js';
 import { segmentPerson } from './detection/segmentation.js';
 import { applyMask } from './rendering/mask.js';
+import { drawAscii } from './rendering/ascii.js';
 import { drawFaceOverlay } from './rendering/faceOverlay.js';
 
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
-canvas.width = 0;
-canvas.height = 0;
-let ctx = canvas.getContext('2d', { willReadFrequently: true });
+let ctx = canvas.getContext('2d');
+
+// hidden work surface at camera size: camera frame + background removal
+const frame = document.createElement('canvas');
+const frameCtx = frame.getContext('2d', { willReadFrequently: true });
 
 // latest detection results, reused while you sit still
 let face = null;
 let personMask = null;
 
 function draw() {
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    frameCtx.drawImage(video, 0, 0, frame.width, frame.height);
 
     if (hasMotion(video)) {
         face = detectFace(video);
         personMask = segmentPerson(video);
     }
 
-    if (personMask) applyMask(ctx, personMask);
+    if (personMask) applyMask(frameCtx, personMask);
+    drawAscii(ctx, frame);
     if (face && config.debug.showFaceOverlay) drawFaceOverlay(ctx, face);
 
     requestAnimationFrame(draw);
 }
 
 
-navigator.mediaDevices.getUserMedia({ video: true })
+navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } }) // front camera on phones
     .then(stream => { video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        frame.width = canvas.width = video.videoWidth;
+        frame.height = canvas.height = video.videoHeight;
         requestAnimationFrame(draw);
     });
     })

@@ -51,10 +51,11 @@ Open the URL it prints (usually http://localhost:5173) and allow camera access.
 ```
 index.html          entry page
 src/main.js         bootstrap: camera + render loop
-src/config.js       all tunable settings
+src/config.js       defaults and tunable values
+src/settings.js     live settings (read by the renderer)
 src/detection/      reads the camera: motion, face points, person mask
-src/rendering/      draws onto the canvas
-src/styles/         styles
+src/rendering/      turns the frame into characters
+src/styles/         page styles
 public/             static files served as-is (favicon, models)
 ```
 
