@@ -2,6 +2,7 @@ import './panel.css';
 import { config } from '../config.js';
 import { settings, setSetting, onSettingsChange } from '../settings.js';
 import { shortcuts } from './keyboard.js';
+import { takeSelfie } from './selfie.js';
 
 const IDLE_DELAY = 2500; // ms without pointer movement before the settings tab fades out
 
@@ -67,7 +68,12 @@ export function createPanel() {
     tab.setAttribute('aria-expanded', 'false');
     tab.setAttribute('aria-controls', body.id);
 
-    const panel = el('header', { className: 'panel' }, [el('div', { className: 'panel-sheet' }, [body, tab])]);
+    // selfie button in the top-right corner; fades and hides together with the tab
+    const selfie = el('button', { className: 'selfie-button', type: 'button', textContent: '📷', title: 'Take selfie (Space)' });
+    selfie.setAttribute('aria-label', 'Take selfie');
+    selfie.addEventListener('click', takeSelfie);
+
+    const panel = el('header', { className: 'panel' }, [el('div', { className: 'panel-sheet' }, [body, tab]), selfie]);
     document.body.append(panel);
 
     const sync = () => syncers.forEach(syncer => syncer());

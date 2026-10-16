@@ -1,5 +1,6 @@
 import { config } from '../config.js';
 import { cycleSetting, stepSetting } from '../settings.js';
+import { takeSelfie } from './selfie.js';
 
 // shown in the settings panel
 export const shortcuts = [
@@ -11,6 +12,7 @@ export const shortcuts = [
     ['[ ]', 'contrast'],
     [', .', 'brightness'],
     ['F', 'fullscreen'],
+    ['Space', 'take a selfie'],
 ];
 
 export function setupKeyboard(panel) {
@@ -31,6 +33,7 @@ export function setupKeyboard(panel) {
             case '.': stepSetting('brightness', 1); break;
             case ',': stepSetting('brightness', -1); break;
             case 'f': toggleFullscreen(); break;
+            case ' ': takeSelfie(); break;
             default: return;
         }
         event.preventDefault();

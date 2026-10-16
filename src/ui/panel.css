@@ -58,7 +58,29 @@
     transition: opacity 0.4s ease;
 }
 
+.selfie-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: opacity 0.4s ease;
+}
+
+/* out of the way while the settings are open */
+.panel.open .selfie-button {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .panel-tab:focus-visible,
+.selfie-button:focus-visible,
 .panel select:focus-visible,
 .panel input:focus-visible {
     outline: 2px solid var(--accent);
@@ -66,7 +88,8 @@
 }
 
 /* fade the tab while the pointer is idle (never while the pane is open) */
-body.idle .panel:not(.open) .panel-tab {
+body.idle .panel:not(.open) .panel-tab,
+body.idle .selfie-button {
     opacity: 0;
 }
 

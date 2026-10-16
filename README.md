@@ -46,6 +46,7 @@ contrast, brightness, 3D depth (face shading from the face points) and character
 | `[` `]` | contrast                                |
 | `,` `.` | brightness                              |
 | `F`     | fullscreen                              |
+| `Space` | take a selfie (saves a PNG)             |
 
 ## Scripts
 
@@ -71,7 +72,7 @@ src/config.js       defaults and tunable values
 src/settings.js     live settings (changed by the UI)
 src/detection/      reads the camera: motion, face points, person mask
 src/rendering/      turns the frame into characters (brightness.js: contrast + 3D face shading)
-src/ui/             settings panel + keyboard shortcuts
+src/ui/             settings panel, keyboard shortcuts, selfie
 src/styles/         page styles
 public/             static files served as-is (favicon, models)
 ```
