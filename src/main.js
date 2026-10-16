@@ -9,6 +9,7 @@ import { drawFaceOverlay } from './rendering/faceOverlay.js';
 import { createPanel } from './ui/panel.js';
 import { setupKeyboard } from './ui/keyboard.js';
 import { countFrame } from './ui/fps.js';
+import { showStatus, hideStatus } from './ui/status.js';
 
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
@@ -47,12 +48,14 @@ function draw(time) {
 }
 
 setupKeyboard(createPanel());
+showStatus('Waiting for camera…');
 
 navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } }) // front camera on phones
     .then(stream => { video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
         frame.width = video.videoWidth;
         frame.height = video.videoHeight;
+        hideStatus();
         requestAnimationFrame(draw);
     });
     })
