@@ -1,5 +1,7 @@
 # ASCII Webcam
 
+![ASCII Camera](public/preview.png)
+
 Turns your webcam into live ASCII art of your face on a black background, using
 [MediaPipe Face Landmarker](https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker)
 for face tracking. Built to be captured in OBS and streamed on Twitch.
