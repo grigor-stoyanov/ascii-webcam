@@ -54,6 +54,11 @@ body {
     max-width: 32em;
 }
 
+.status-note {
+    font-size: 13px;
+    color: #7fa883;
+}
+
 #status-message::after {
     content: '▌';
     animation: blink 1s steps(1) infinite;
