@@ -47,19 +47,31 @@ function draw(time) {
     requestAnimationFrame(draw);
 }
 
-setupKeyboard(createPanel());
-showStatus('Waiting for camera…');
+// what to tell the user when the camera can't start
+function cameraError(err) {
+    switch (err.name) {
+        case 'NotAllowedError': return 'Camera access was blocked. Allow it from the camera icon in the address bar, then try again.';
+        case 'NotFoundError': case 'OverconstrainedError': return 'No camera found. Plug one in, then try again.';
+        case 'NotReadableError': return 'Your camera is busy in another app. Close that app, then try again.';
+        case 'TypeError': return 'The camera only works on https:// pages.'; // navigator.mediaDevices is missing on http
+        default: return `Couldn't start the camera (${err.name}).`;
+    }
+}
 
-navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } }) // front camera on phones
-    .then(stream => { video.srcObject = stream;
-    video.addEventListener('loadedmetadata', () => {
-        frame.width = video.videoWidth;
-        frame.height = video.videoHeight;
-        hideStatus();
-        requestAnimationFrame(draw);
-    });
-    })
-    .catch(err => {
-        alert('Error accessing camera: ' + err);
-        window.close();
-    });
+function startCamera() {
+    showStatus('Waiting for camera…');
+    Promise.resolve() // so a missing navigator.mediaDevices also ends up in catch
+        .then(() => navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })) // front camera on phones
+        .then(stream => { video.srcObject = stream; })
+        .catch(err => showStatus(cameraError(err), startCamera));
+}
+
+video.addEventListener('loadedmetadata', () => {
+    frame.width = video.videoWidth;
+    frame.height = video.videoHeight;
+    hideStatus();
+    requestAnimationFrame(draw);
+});
+
+setupKeyboard(createPanel());
+startCamera();
