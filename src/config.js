@@ -34,14 +34,24 @@ export const config = {
         pointReach: 0.08,       // how far each face point's shading reaches (share of face width)
     },
 
-    // starting values for the live settings (see settings.js)
+    // starting values for everything the settings panel can change
     defaults: {
         style: 'matrix',
         color: 'green',
+        zoom: 1.5,          // output size = camera size × zoom
         contrast: 1.3,
         brightness: 0,
         depth: 0.6,         // strength of the 3D face shading (0 = flat image)
         cellSize: 10,       // character size in pixels
+    },
+
+    // slider limits for the numeric settings
+    ranges: {
+        zoom: { min: 0.5, max: 3, step: 0.1 },
+        contrast: { min: 0.5, max: 3, step: 0.1 },
+        brightness: { min: -0.5, max: 0.5, step: 0.05 },
+        depth: { min: 0, max: 1.5, step: 0.1 },
+        cellSize: { min: 6, max: 24, step: 1 },
     },
 
     debug: {

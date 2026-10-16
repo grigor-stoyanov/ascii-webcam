@@ -31,6 +31,11 @@ npm run dev
 
 Open the URL it prints (usually http://localhost:5173) and allow camera access.
 
+## Controls
+
+Open the **⚙ Settings** tab at the top of the screen to change zoom, contrast,
+brightness, 3D depth (face shading from the face points) and character size.
+
 ## Scripts
 
 | Script            | What it does                                        |
@@ -52,9 +57,10 @@ Open the URL it prints (usually http://localhost:5173) and allow camera access.
 index.html          entry page
 src/main.js         bootstrap: camera + render loop
 src/config.js       defaults and tunable values
-src/settings.js     live settings (read by the renderer)
+src/settings.js     live settings (changed by the UI)
 src/detection/      reads the camera: motion, face points, person mask
 src/rendering/      turns the frame into characters (brightness.js: contrast + 3D face shading)
+src/ui/             settings panel
 src/styles/         page styles
 public/             static files served as-is (favicon, models)
 ```

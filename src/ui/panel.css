@@ -1,0 +1,116 @@
+.panel {
+    --accent: #39ff14;
+    --text: #d7ffd9;
+    --muted: #7fa883;
+    --surface: rgba(4, 12, 6, 0.88);
+    --border: rgba(57, 255, 20, 0.25);
+    --tab-height: 36px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    font: 14px/1.4 ui-monospace, 'Cascadia Code', Consolas, Menlo, monospace;
+    color: var(--text);
+    pointer-events: none; /* only the sheet itself catches clicks */
+}
+
+/* the sheet slides down; when closed only the tab at its bottom edge peeks out */
+.panel-sheet {
+    max-width: 720px;
+    margin: 0 auto;
+    transform: translateY(calc(-100% + var(--tab-height)));
+    transition: transform 0.25s ease;
+    pointer-events: auto;
+}
+
+.panel.open .panel-sheet {
+    transform: none;
+}
+
+.panel-body {
+    padding: 16px 20px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 14px 14px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.panel-tab {
+    display: block;
+    height: var(--tab-height);
+    margin: 0 auto;
+    padding: 0 16px;
+    font: inherit;
+    color: var(--accent);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    cursor: pointer;
+    transition: opacity 0.4s ease;
+}
+
+.panel-tab:focus-visible,
+.panel input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* fade the tab while the pointer is idle (never while the pane is open) */
+body.idle .panel:not(.open) .panel-tab {
+    opacity: 0;
+}
+
+.panel-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 24px;
+}
+
+.control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.control-name {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.control-name output {
+    color: var(--accent);
+}
+
+.panel input[type='range'] {
+    width: 100%;
+    accent-color: var(--accent);
+}
+
+/* phones: one column, bigger touch targets, 16px text so iOS doesn't zoom into inputs */
+@media (max-width: 600px) {
+    .panel {
+        font-size: 16px;
+        --tab-height: 44px;
+    }
+
+    .panel-body {
+        border-left: none;
+        border-right: none;
+        border-radius: 0 0 14px 14px;
+        max-height: 75dvh;
+        overflow-y: auto;
+    }
+
+    .panel-controls {
+        grid-template-columns: 1fr;
+    }
+}
