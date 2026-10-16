@@ -1,3 +1,28 @@
-body { background: black; margin: 0; }
-.video-container { display: flex; justify-content: center; align-items: center; height: 100vh; }
-video, canvas { transform: scaleX(-1); }
+body {
+    background: black;
+    margin: 0;
+}
+
+.video-container {
+    display: flex;
+    position:relative;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#video,
+#canvas {
+    transform: scaleX(-1);
+}
+
+
+#video {
+    visibility: hidden;
+}
+
+#canvas {
+    display: block;
+    background: green;
+    position: absolute;
+}

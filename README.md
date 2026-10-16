@@ -21,6 +21,8 @@ npm install
 npm run model   # downloads the face tracking model (~3.6 MB) into public/models/
 ```
 
+`npm install` also copies MediaPipe's WASM files into `public/wasm/` (via `postinstall`).
+
 ## Usage
 
 ```sh

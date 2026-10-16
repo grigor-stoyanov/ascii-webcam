@@ -1,3 +1,12 @@
+import { FaceLandmarker, FilesetResolver } from '@mediapipe/tasks-vision';
+
+const vision = await FilesetResolver.forVisionTasks('/wasm');
+const faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+    baseOptions: { modelAssetPath: '/models/face_landmarker.task', delegate: 'GPU' },
+    runningMode: 'VIDEO',
+    numFaces: 1,
+});
+
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 canvas.width = 0;
