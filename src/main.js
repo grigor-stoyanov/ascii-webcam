@@ -27,7 +27,7 @@ function draw() {
     }
 
     if (personMask) applyMask(frameCtx, personMask);
-    drawAscii(ctx, frame);
+    drawAscii(ctx, frame, face);
     if (face && config.debug.showFaceOverlay) drawFaceOverlay(ctx, face);
 
     requestAnimationFrame(draw);

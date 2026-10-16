@@ -14,7 +14,7 @@ function randomChar(chars) {
 }
 
 // draws the masked camera frame as characters on black
-export function drawAscii(ctx, frame) {
+export function drawAscii(ctx, frame, face) {
     const { width, height } = ctx.canvas;
     const { chars } = config.charsets[settings.style];
     const hue = config.colors[settings.color];
@@ -30,7 +30,7 @@ export function drawAscii(ctx, frame) {
     sampleCtx.setTransform(-1, 0, 0, 1, columns, 0);
     sampleCtx.drawImage(frame, 0, 0, columns, rows);
     const pixels = sampleCtx.getImageData(0, 0, columns, rows).data;
-    const levels = computeLevels(pixels, columns, rows);
+    const levels = computeLevels(pixels, columns, rows, face);
 
     if (cellChars.length !== levels.length) {
         cellChars = Array.from({ length: levels.length }, () => randomChar(chars));

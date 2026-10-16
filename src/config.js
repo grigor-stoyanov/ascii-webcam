@@ -28,10 +28,19 @@ export const config = {
         green: 120,
     },
 
+    // 3D shading from the face points (see rendering/brightness.js)
+    face3d: {
+        featureContrast: 1.8,   // extra contrast around eyes, brows, lips
+        pointReach: 0.08,       // how far each face point's shading reaches (share of face width)
+    },
+
     // starting values for the live settings (see settings.js)
     defaults: {
         style: 'matrix',
         color: 'green',
+        contrast: 1.3,
+        brightness: 0,
+        depth: 0.6,         // strength of the 3D face shading (0 = flat image)
         cellSize: 10,       // character size in pixels
     },
 

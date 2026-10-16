@@ -54,7 +54,7 @@ src/main.js         bootstrap: camera + render loop
 src/config.js       defaults and tunable values
 src/settings.js     live settings (read by the renderer)
 src/detection/      reads the camera: motion, face points, person mask
-src/rendering/      turns the frame into characters
+src/rendering/      turns the frame into characters (brightness.js: contrast + 3D face shading)
 src/styles/         page styles
 public/             static files served as-is (favicon, models)
 ```
