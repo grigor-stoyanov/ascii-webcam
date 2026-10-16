@@ -21,7 +21,7 @@ const frameCtx = frame.getContext('2d', { willReadFrequently: true });
 let face = null;
 let personMask = null;
 
-function draw() {
+function draw(time) {
     // output size follows the zoom slider, keeping the camera's proportions
     const width = Math.round(frame.width * settings.zoom);
     const height = Math.round(frame.height * settings.zoom);
@@ -38,7 +38,7 @@ function draw() {
     }
 
     if (personMask) applyMask(frameCtx, personMask);
-    drawAscii(ctx, frame, face);
+    drawAscii(ctx, frame, face, time);
     if (face && config.debug.showFaceOverlay) drawFaceOverlay(ctx, face);
 
     requestAnimationFrame(draw);

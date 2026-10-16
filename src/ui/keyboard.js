@@ -1,9 +1,12 @@
-import { stepSetting } from '../settings.js';
+import { config } from '../config.js';
+import { cycleSetting, stepSetting } from '../settings.js';
 
 // shown in the settings panel
 export const shortcuts = [
     ['P', 'open / close settings'],
     ['H', 'hide all controls (for streaming)'],
+    ['S', 'next symbols (Shift: previous)'],
+    ['C', 'next color (Shift: previous)'],
     ['+ −', 'zoom'],
     ['[ ]', 'contrast'],
     [', .', 'brightness'],
@@ -19,6 +22,8 @@ export function setupKeyboard(panel) {
         switch (event.key.toLowerCase()) {
             case 'p': panel.toggle(); break;
             case 'h': panel.toggleHidden(); break;
+            case 's': cycleSetting('style', config.charsets, direction); break;
+            case 'c': cycleSetting('color', config.colors, direction); break;
             case '+': case '=': stepSetting('zoom', 1); break;
             case '-': case '_': stepSetting('zoom', -1); break;
             case ']': stepSetting('contrast', 1); break;

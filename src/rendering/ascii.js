@@ -6,18 +6,27 @@ import { computeLevels } from './brightness.js';
 const sampleCanvas = document.createElement('canvas');
 const sampleCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
 
-// every cell keeps its own random symbol, so the picture doesn't turn into noise
+// random symbol sets: every cell keeps its own symbol, so the picture doesn't turn into noise
 let cellChars = [];
+let cellCharset = null;
 
 function randomChar(chars) {
     return chars[Math.floor(Math.random() * chars.length)];
 }
 
+// dark → dim, bright → almost white
+function cellColor(color, level, x, time) {
+    const lightness = 12 + level * 73;
+    if (color === 'rainbow') return `hsl(${(x * 360 + time * 0.05) % 360}, 100%, ${lightness}%)`;
+    if (color === 'white') return `hsl(0, 0%, ${lightness}%)`;
+    return `hsl(${color}, 100%, ${lightness}%)`;
+}
+
 // draws the masked camera frame as characters on black
-export function drawAscii(ctx, frame, face) {
+export function drawAscii(ctx, frame, face, time) {
     const { width, height } = ctx.canvas;
-    const { chars } = config.charsets[settings.style];
-    const hue = config.colors[settings.color];
+    const charset = config.charsets[settings.style];
+    const color = config.colors[settings.color];
 
     const columns = Math.max(1, Math.floor(width / settings.cellSize));
     const rows = Math.max(1, Math.floor(height / settings.cellSize));
@@ -32,11 +41,14 @@ export function drawAscii(ctx, frame, face) {
     const pixels = sampleCtx.getImageData(0, 0, columns, rows).data;
     const levels = computeLevels(pixels, columns, rows, face);
 
-    if (cellChars.length !== levels.length) {
-        cellChars = Array.from({ length: levels.length }, () => randomChar(chars));
-    }
-    for (let n = 0; n < cellChars.length * config.flicker; n++) {
-        cellChars[Math.floor(Math.random() * cellChars.length)] = randomChar(chars);
+    if (charset.random) {
+        if (cellChars.length !== levels.length || cellCharset !== charset) {
+            cellChars = Array.from({ length: levels.length }, () => randomChar(charset.chars));
+            cellCharset = charset;
+        }
+        for (let n = 0; n < cellChars.length * config.flicker; n++) {
+            cellChars[Math.floor(Math.random() * cellChars.length)] = randomChar(charset.chars);
+        }
     }
 
     ctx.fillStyle = 'black';
@@ -51,8 +63,11 @@ export function drawAscii(ctx, frame, face) {
             const level = levels[cell];
             if (level < 0) continue; // background stays black
 
-            ctx.fillStyle = `hsl(${hue}, 100%, ${12 + level * 73}%)`; // dark → dim, bright → almost white
-            ctx.fillText(cellChars[cell], (x + 0.5) * cellWidth, (y + 0.5) * cellHeight);
+            const char = charset.random
+                ? cellChars[cell]
+                : charset.chars[Math.round(level * (charset.chars.length - 1))];
+            ctx.fillStyle = cellColor(color, level, x / columns, time);
+            ctx.fillText(char, (x + 0.5) * cellWidth, (y + 0.5) * cellHeight);
         }
     }
 }

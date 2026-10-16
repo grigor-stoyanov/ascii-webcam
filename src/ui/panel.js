@@ -5,6 +5,11 @@ import { shortcuts } from './keyboard.js';
 
 const IDLE_DELAY = 2500; // ms without pointer movement before the settings tab fades out
 
+const selects = [
+    { key: 'style', label: 'Symbols', options: config.charsets },
+    { key: 'color', label: 'Color', options: config.colors },
+];
+
 const sliders = [
     { key: 'zoom', label: 'Zoom', format: value => `${value.toFixed(1)}×` },
     { key: 'contrast', label: 'Contrast', format: value => value.toFixed(1) },
@@ -24,6 +29,18 @@ export function createPanel() {
     const syncers = []; // functions that copy the current settings into the controls
 
     const controls = el('div', { className: 'panel-controls' });
+
+    for (const { key, label, options } of selects) {
+        const select = el('select', {}, Object.keys(options).map(
+            value => el('option', { value, textContent: value }),
+        ));
+        select.addEventListener('change', () => setSetting(key, select.value));
+        syncers.push(() => { select.value = settings[key]; });
+        controls.append(el('label', { className: 'control' }, [
+            el('span', { className: 'control-name', textContent: label }),
+            select,
+        ]));
+    }
 
     for (const { key, label, format } of sliders) {
         const { min, max, step } = config.ranges[key];

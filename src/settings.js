@@ -23,3 +23,10 @@ export function setSetting(key, value) {
 export function stepSetting(key, direction) {
     setSetting(key, settings[key] + direction * config.ranges[key].step);
 }
+
+// option settings: move to the next (+1) or previous (-1) option
+export function cycleSetting(key, options, direction = 1) {
+    const keys = Object.keys(options);
+    const index = keys.indexOf(settings[key]);
+    setSetting(key, keys[(index + direction + keys.length) % keys.length]);
+}

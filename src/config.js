@@ -17,15 +17,27 @@ export const config = {
         threshold: 0.5,     // mask value (0–1) above which a pixel counts as you
     },
 
-    // symbol options; `random` sets show random symbols (brightness only sets their color)
+    // symbol options; `random` sets show random symbols (brightness only sets their color),
+    // the others are ordered dark → bright and brightness picks the symbol
     charsets: {
         matrix: { chars: 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789:.=*+-<>|', random: true },
+        binary: { chars: '01', random: true },
+        classic: { chars: '.:-=+*#%@' },
+        detailed: { chars: '.\'`^",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$' },
+        blocks: { chars: '░▒▓█' },
     },
     flicker: 0.02,          // share of random symbols that change each frame
 
-    // color options: a hue (0–360)
+    // color options: a hue (0–360), 'white' or 'rainbow'
     colors: {
         green: 120,
+        amber: 38,
+        cyan: 185,
+        pink: 320,
+        red: 0,
+        purple: 270,
+        white: 'white',
+        rainbow: 'rainbow',
     },
 
     // 3D shading from the face points (see rendering/brightness.js)

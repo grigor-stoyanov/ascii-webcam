@@ -33,13 +33,15 @@ Open the URL it prints (usually http://localhost:5173) and allow camera access.
 
 ## Controls
 
-Open the **⚙ Settings** tab at the top of the screen to change zoom, contrast,
-brightness, 3D depth (face shading from the face points) and character size.
+Open the **⚙ Settings** tab at the top of the screen to change symbols, colors, zoom,
+contrast, brightness, 3D depth (face shading from the face points) and character size.
 
 | Key     | Action                                  |
 | ------- | --------------------------------------- |
 | `P`     | open / close settings                   |
 | `H`     | hide all controls (for streaming)       |
+| `S`     | next symbol style (`Shift`: previous)   |
+| `C`     | next color (`Shift`: previous)          |
 | `+` `-` | zoom in / out                           |
 | `[` `]` | contrast                                |
 | `,` `.` | brightness                              |
