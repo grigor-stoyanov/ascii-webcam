@@ -7,6 +7,7 @@ import { applyMask } from './rendering/mask.js';
 import { drawAscii } from './rendering/ascii.js';
 import { drawFaceOverlay } from './rendering/faceOverlay.js';
 import { createPanel } from './ui/panel.js';
+import { setupKeyboard } from './ui/keyboard.js';
 
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
@@ -43,7 +44,7 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
-createPanel();
+setupKeyboard(createPanel());
 
 navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } }) // front camera on phones
     .then(stream => { video.srcObject = stream;

@@ -36,6 +36,15 @@ Open the URL it prints (usually http://localhost:5173) and allow camera access.
 Open the **⚙ Settings** tab at the top of the screen to change zoom, contrast,
 brightness, 3D depth (face shading from the face points) and character size.
 
+| Key     | Action                                  |
+| ------- | --------------------------------------- |
+| `P`     | open / close settings                   |
+| `H`     | hide all controls (for streaming)       |
+| `+` `-` | zoom in / out                           |
+| `[` `]` | contrast                                |
+| `,` `.` | brightness                              |
+| `F`     | fullscreen                              |
+
 ## Scripts
 
 | Script            | What it does                                        |
@@ -60,7 +69,7 @@ src/config.js       defaults and tunable values
 src/settings.js     live settings (changed by the UI)
 src/detection/      reads the camera: motion, face points, person mask
 src/rendering/      turns the frame into characters (brightness.js: contrast + 3D face shading)
-src/ui/             settings panel
+src/ui/             settings panel + keyboard shortcuts
 src/styles/         page styles
 public/             static files served as-is (favicon, models)
 ```

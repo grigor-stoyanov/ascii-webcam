@@ -1,6 +1,6 @@
 import { config } from './config.js';
 
-// live settings, changed by the panel, read by the renderer every frame
+// live settings, changed by the panel and keyboard, read by the renderer every frame
 export const settings = { ...config.defaults };
 
 const listeners = new Set();
@@ -17,4 +17,9 @@ export function setSetting(key, value) {
     }
     settings[key] = value;
     listeners.forEach(listener => listener());
+}
+
+// numeric settings: move one step up (+1) or down (-1)
+export function stepSetting(key, direction) {
+    setSetting(key, settings[key] + direction * config.ranges[key].step);
 }

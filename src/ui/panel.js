@@ -1,6 +1,7 @@
 import './panel.css';
 import { config } from '../config.js';
 import { settings, setSetting, onSettingsChange } from '../settings.js';
+import { shortcuts } from './keyboard.js';
 
 const IDLE_DELAY = 2500; // ms without pointer movement before the settings tab fades out
 
@@ -18,7 +19,7 @@ function el(tag, props = {}, children = []) {
     return element;
 }
 
-// drop-down settings pane at the top of the screen; returns { toggle }
+// drop-down settings pane at the top of the screen; returns { toggle, toggleHidden }
 export function createPanel() {
     const syncers = []; // functions that copy the current settings into the controls
 
@@ -39,7 +40,12 @@ export function createPanel() {
         ]));
     }
 
-    const body = el('div', { className: 'panel-body', id: 'panel-body', inert: true }, [controls]);
+    const keys = el('dl', { className: 'panel-keys' }, shortcuts.flatMap(([key, action]) => [
+        el('dt', {}, [el('kbd', { textContent: key })]),
+        el('dd', { textContent: action }),
+    ]));
+
+    const body = el('div', { className: 'panel-body', id: 'panel-body', inert: true }, [controls, keys]);
     const tab = el('button', { className: 'panel-tab', type: 'button', textContent: '⚙ Settings' });
     tab.setAttribute('aria-expanded', 'false');
     tab.setAttribute('aria-controls', body.id);
@@ -57,6 +63,11 @@ export function createPanel() {
         tab.setAttribute('aria-expanded', String(open));
     }
 
+    function toggleHidden() {
+        const hidden = panel.classList.toggle('hidden');
+        if (hidden) toggle(false);
+    }
+
     tab.addEventListener('click', () => toggle());
     document.getElementById('canvas').addEventListener('click', () => toggle(false));
 
@@ -71,5 +82,5 @@ export function createPanel() {
     window.addEventListener('pointerdown', wake);
     wake();
 
-    return { toggle };
+    return { toggle, toggleHidden };
 }
