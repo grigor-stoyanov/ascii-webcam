@@ -50,9 +50,12 @@ Open the URL it prints (usually http://localhost:5173) and allow camera access.
 
 ```
 index.html          entry page
-src/main.js         camera, face tracking and ASCII rendering
+src/main.js         bootstrap: camera + render loop
+src/config.js       all tunable settings
+src/detection/      reads the camera: motion, face points, person mask
+src/rendering/      draws onto the canvas
 src/styles/         styles
-public/             static files served as-is (favicon, model)
+public/             static files served as-is (favicon, models)
 ```
 
 ## License
