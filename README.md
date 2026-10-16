@@ -98,7 +98,9 @@ public/             static files served as-is (favicon, preview image, models)
 
 ## Deployment
 
-The app is fully static, so any static host works (Cloudflare Pages, Netlify, Vercel):
+Every push to `master` deploys to GitHub Pages at https://grigor-stoyanov.github.io/ascii-webcam/ via `.github/workflows/deploy.yml`.
+
+The build uses `base: '/ascii-webcam/'` (see `vite.config.js`). To host at a domain root instead (Cloudflare Pages, Netlify, Vercel), set `base` to `'/'`, then use:
 
 - **Build command:** `npm install && npm run model && npm run build`
 - **Output folder:** `dist`

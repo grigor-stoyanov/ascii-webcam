@@ -1,10 +1,10 @@
 // Every tunable value in one place.
 export const config = {
     models: {
-        wasmPath: '/wasm',
+        wasmPath: `${import.meta.env.BASE_URL}wasm`,
         delegate: 'GPU',
-        faceLandmarker: '/models/face_landmarker.task',
-        selfieSegmenter: '/models/selfie_segmenter.tflite',
+        faceLandmarker: `${import.meta.env.BASE_URL}models/face_landmarker.task`,
+        selfieSegmenter: `${import.meta.env.BASE_URL}models/selfie_segmenter.tflite`,
     },
 
     motion: {
